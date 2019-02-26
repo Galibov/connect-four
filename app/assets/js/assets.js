@@ -9,8 +9,6 @@ import result_blue from '../img/result_blue.png'
 // sounds
 import victory from '../sounds/victory.mp3'
 
-
-
 export default {
     IMAGES: {
         favicon,
@@ -19,7 +17,6 @@ export default {
         result_red,
         result_blue
     },
-
     SOUNDS: {
         victory
     }
