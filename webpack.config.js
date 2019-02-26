@@ -5,6 +5,7 @@ var pkg = require('./package.json')
 module.exports = {
     context: path.join(__dirname, 'app'),
     entry: './assets/js/app.js',
+    devtool: 'inline-source-map',
     target: 'web',
     output: {
         path: path.resolve(pkg.config.buildDir),
@@ -35,7 +36,23 @@ module.exports = {
                     loader: "file-loader?name=[path][name].[ext]"
                 }
 
-            }
+            },
+            {
+                test: /\.jpe?g$|\.svg$|\.png$|\.ico$/,
+                loader: "file-loader",
+                options: {
+                    name: "[path][name].[ext]"
+                }
+
+            },
+            {
+                test: /\.mp3$/,
+                loader: "file-loader",
+                options: {
+                    name: "[path][name].[ext]"
+                }
+            },
+
         ]
     }
 };
