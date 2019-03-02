@@ -1,11 +1,11 @@
-import Setup from './Setup'
+import Config from './Config'
 import Controls from './Controls'
 import Logic from './Logic'
 export default class Game {
     constructor() {
         this._domContainer = document.getElementById('game-block');
         PIXI.loader
-            .add([Object.values(Setup.IMAGES)])
+            .add([Object.values(Config.IMAGES)])
             .load(() => this._start());
     }
 
@@ -40,16 +40,16 @@ export default class Game {
         let i,
             j,
             slot,
-            backgroundBoard = this.resources[Setup.IMAGES.board_block].texture,
+            backgroundBoard = this.resources[Config.IMAGES.board_block].texture,
             renderBackground;
         this.slotContainer = new PIXI.Container();
-        for (i = 0; i < Setup.GAME_CONFIG.board_width; i += 1) {
+        for (i = 0; i < Config.GAME_CONFIG.board_width; i += 1) {
             slot = new PIXI.Container();
             this._interactive(slot, false, undefined);
-            for (j = 0; j < Setup.GAME_CONFIG.board_height; j += 1) {
+            for (j = 0; j < Config.GAME_CONFIG.board_height; j += 1) {
                 renderBackground = new PIXI.Sprite(backgroundBoard);
-                renderBackground.x = Setup.GAME_CONFIG.board_size * i;
-                renderBackground.y = Setup.GAME_CONFIG.board_size * j;
+                renderBackground.x = Config.GAME_CONFIG.board_size * i;
+                renderBackground.y = Config.GAME_CONFIG.board_size * j;
                 slot.addChild(renderBackground);
             }
             this.slotContainer.addChild(slot);
@@ -62,15 +62,15 @@ export default class Game {
 
 
     _initMessages() {
-        let texBoard = this.resources[Setup.IMAGES.message_board].texture,
-            texMessage = this.resources[Setup.IMAGES.try_again_blue].texture,
-            texBtnReplay = this.resources[Setup.IMAGES.btn_replay].texture,
+        let texBoard = this.resources[Config.IMAGES.message_board].texture,
+            texMessage = this.resources[Config.IMAGES.try_again_blue].texture,
+            texBtnReplay = this.resources[Config.IMAGES.btn_replay].texture,
             sprBoard = this._toCenter(texBoard);
         this.sprMessage = this._toCenter(texMessage);
-        this.rectBtnReplay = new PIXI.Rectangle(0, 0, texBtnReplay.width, Setup.GRAPHICS.btn_height);
+        this.rectBtnReplay = new PIXI.Rectangle(0, 0, texBtnReplay.width, Config.GRAPHICS.btn_height);
         texBtnReplay.frame = this.rectBtnReplay;
         this.sprBtnReplay = this._toCenter(texBtnReplay);
-        this.sprBtnReplay.y += Setup.GRAPHICS.replay_btn_offset;
+        this.sprBtnReplay.y += Config.GRAPHICS.replay_btn_offset;
         this.messageContainer = new PIXI.Container();
         this.messageContainer.addChild(sprBoard);
         this.messageContainer.addChild(this.sprMessage);
@@ -80,13 +80,13 @@ export default class Game {
     }
 
     _initPreview() {
-        let texArrow = this.resources[Setup.IMAGES.arrow].texture,
-            texShadow = this.resources[Setup.IMAGES.chip_blue_shadow].texture;
-        this.rectArrow = new PIXI.Rectangle(0, Setup.GAME_CONFIG.board_size, Setup.GAME_CONFIG.board_size, Setup.GAME_CONFIG.board_size);
+        let texArrow = this.resources[Config.IMAGES.arrow].texture,
+            texShadow = this.resources[Config.IMAGES.chip_blue_shadow].texture;
+        this.rectArrow = new PIXI.Rectangle(0, Config.GAME_CONFIG.board_size, Config.GAME_CONFIG.board_size, Config.GAME_CONFIG.board_size);
         texArrow.frame = this.rectArrow;
         this.sprArrow = new PIXI.Sprite(texArrow);
         this.sprShadow = new PIXI.Sprite(texShadow);
-        this.sprShadow.y = (Setup.GAME_CONFIG.board_height - 1) * Setup.GAME_CONFIG.board_size;
+        this.sprShadow.y = (Config.GAME_CONFIG.board_height - 1) * Config.GAME_CONFIG.board_size;
         this.arrowContainer = new PIXI.Container();
         this.arrowContainer.addChild(this.sprArrow);
         this.arrowContainer.addChild(this.sprShadow);
@@ -103,8 +103,8 @@ export default class Game {
 
     _getCanvasSize() {
         return {
-            canvas_height: Setup.GAME_CONFIG.board_height * Setup.GAME_CONFIG.board_size,
-            canvas_width: Setup.GAME_CONFIG.board_width * Setup.GAME_CONFIG.board_size
+            canvas_height: Config.GAME_CONFIG.board_height * Config.GAME_CONFIG.board_size,
+            canvas_width: Config.GAME_CONFIG.board_width * Config.GAME_CONFIG.board_size
         }
     }
 
@@ -176,7 +176,7 @@ export default class Game {
 
     _mouseSelection() {
         if (this.isMouseInsideCanvas()) {
-            return Math.floor(this._Controls.MousePos.x / Setup.GAME_CONFIG.board_size);
+            return Math.floor(this._Controls.MousePos.x / Config.GAME_CONFIG.board_size);
         }
     }
 
@@ -200,10 +200,10 @@ export default class Game {
             showCounter = 0;
         switch (this._Logic.PlayerTurn) {
             case 1:
-                imgKey = Setup.IMAGES.try_again_blue;
+                imgKey = Config.IMAGES.try_again_blue;
                 break;
             case 2:
-                imgKey = Setup.IMAGES.try_again_red;
+                imgKey = Config.IMAGES.try_again_red;
                 break;
         }
         this.sprMessage.texture = this.resources[imgKey].texture;
@@ -211,14 +211,14 @@ export default class Game {
         this.sprBtnReplay.visible = false;
 
         showAndHide = setInterval(() => {
-            if (showCounter === Setup.GRAPHICS.message_time) {
+            if (showCounter === Config.GRAPHICS.message_time) {
                 this.messageContainer.visible = false;
                 this._Controls.setPlayerInput(true);
                 this._feedbackInputAllowed();
                 clearInterval(showAndHide);
             }
             showCounter += 1;
-        }, Setup.GRAPHICS.frame_rate);
+        }, Config.GRAPHICS.frame_rate);
     }
 
     _feedbackInput(vx, vy) {
@@ -227,7 +227,7 @@ export default class Game {
             animCounterStop = 4;
         animInput = setInterval(() => {
             if (animLoopCounter < animCounterStop) {
-                this.rectArrow.y = animLoopCounter * Setup.GAME_CONFIG.board_size;
+                this.rectArrow.y = animLoopCounter * Config.GAME_CONFIG.board_size;
                 this.sprArrow.texture.frame = this.rectArrow;
                 animLoopCounter += 1;
             } else {
@@ -235,14 +235,14 @@ export default class Game {
                 this._feedbackDrop(vx, vy);
                 clearInterval(animInput);
             }
-        }, Setup.GRAPHICS.frame_rate);
+        }, Config.GRAPHICS.frame_rate);
     }
 
 
     _feedbackDrop(vx, vy) {
         let imgKey,
             chipColor = this._Logic.ArrayFieldValues[vx][vy],
-            rect = new PIXI.Rectangle(0, 0, Setup.GAME_CONFIG.board_size, Setup.GAME_CONFIG.board_size),
+            rect = new PIXI.Rectangle(0, 0, Config.GAME_CONFIG.board_size, Config.GAME_CONFIG.board_size),
             texChip,
             sprChip,
             firstLoop = true,
@@ -250,16 +250,16 @@ export default class Game {
             animLoopCounter = 0;
         switch (chipColor) {
             case 1:
-                imgKey = Setup.IMAGES.chip_blue_drop;
+                imgKey = Config.IMAGES.chip_blue_drop;
                 break;
             case 2:
-                imgKey = Setup.IMAGES.chip_red_drop;
+                imgKey = Config.IMAGES.chip_red_drop;
                 break;
         }
         texChip = this.resources[imgKey].texture;
         sprChip = new PIXI.Sprite(texChip);
         sprChip.texture.frame = rect;
-        sprChip.x = Setup.GAME_CONFIG.board_size * vx;
+        sprChip.x = Config.GAME_CONFIG.board_size * vx;
         sprChip.y = 0;
         this.chipContainer.addChild(sprChip);
 
@@ -270,19 +270,19 @@ export default class Game {
                 animLoopCounter += 0.5;
             }
             if (animLoopCounter < vy) {
-                if (rect.y === Setup.GAME_CONFIG.board_size * 2) {
+                if (rect.y === Config.GAME_CONFIG.board_size * 2) {
                     rect.y = 0;
                 }
-                rect.y += Setup.GAME_CONFIG.board_size;
+                rect.y += Config.GAME_CONFIG.board_size;
             } else {
-                rect.x = Setup.GAME_CONFIG.board_size;
+                rect.x = Config.GAME_CONFIG.board_size;
                 rect.y = 0;
                 this._feedbackImpact(sprChip, rect, chipColor);
                 clearInterval(animDrop);
             }
-            sprChip.y = animLoopCounter * Setup.GAME_CONFIG.board_size;
+            sprChip.y = animLoopCounter * Config.GAME_CONFIG.board_size;
             sprChip.texture.frame = rect;
-        }, Setup.GRAPHICS.frame_rate);
+        }, Config.GRAPHICS.frame_rate);
     }
 
     _feedbackImpact(sprChip, rect, chipColor) {
@@ -292,20 +292,20 @@ export default class Game {
             animCounterStop = 3;
         switch (chipColor) {
             case 1:
-                imgKey = Setup.IMAGES.chip_blue;
+                imgKey = Config.IMAGES.chip_blue;
                 break;
             case 2:
-                imgKey = Setup.IMAGES.chip_red;
+                imgKey = Config.IMAGES.chip_red;
                 break;
         }
-        rect.x = Setup.GAME_CONFIG.board_size;
+        rect.x = Config.GAME_CONFIG.board_size;
         rect.y = 0;
         sprChip.texture.frame = rect;
 
         animImpact = setInterval(() => {
             animLoopCounter += 1;
             if (animLoopCounter < animCounterStop) {
-                rect.y = animLoopCounter * Setup.GAME_CONFIG.board_size;
+                rect.y = animLoopCounter * Config.GAME_CONFIG.board_size;
                 sprChip.texture.frame = rect;
             } else {
                 sprChip.texture = this.resources[imgKey].texture;
@@ -314,14 +314,14 @@ export default class Game {
                 this._feedbackWin(chipColor);
                 clearInterval(animImpact);
             }
-        }, Setup.GRAPHICS.frame_rate);
+        }, Config.GRAPHICS.frame_rate);
     }
 
     _feedbackWin(chipColor) {
         let imgKey,
             texEffect,
             sprEffect,
-            rect = new PIXI.Rectangle(0, 0, Setup.GAME_CONFIG.board_size, Setup.GAME_CONFIG.board_size),
+            rect = new PIXI.Rectangle(0, 0, Config.GAME_CONFIG.board_size, Config.GAME_CONFIG.board_size),
             animWin,
             delayCounter = 0,
             animLoopCounter = 0,
@@ -330,10 +330,10 @@ export default class Game {
             animCounterStop = animFrameCount * this._Logic.maxChipRow;
         switch (chipColor) {
             case 1:
-                imgKey = Setup.IMAGES.chip_blue_win;
+                imgKey = Config.IMAGES.chip_blue_win;
                 break;
             case 2:
-                imgKey = Setup.IMAGES.chip_red_win;
+                imgKey = Config.IMAGES.chip_red_win;
                 break;
         }
         texEffect = this.resources[imgKey].texture;
@@ -345,17 +345,17 @@ export default class Game {
         }
 
         animWin = setInterval(() => {
-            if (delayCounter < Setup.GRAPHICS.impact_delay) {
+            if (delayCounter < Config.GRAPHICS.impact_delay) {
                 delayCounter += 1;
             } else {
                 if (this._Logic.GameOver) {
                     if (animLoopCounter < animCounterStop) {
-                        rect.y = (animLoopCounter % animFrameCount) * Setup.GAME_CONFIG.board_size;
+                        rect.y = (animLoopCounter % animFrameCount) * Config.GAME_CONFIG.board_size;
                         sprEffect.texture.frame = rect;
                         animRunCount = Math.floor(animLoopCounter / animFrameCount);
                         if (animLoopCounter % animFrameCount === 0) {
-                            sprEffect.x = this._Logic.ArrayWinX[animRunCount] * Setup.GAME_CONFIG.board_size;
-                            sprEffect.y = this._Logic.ArrayWinY[animRunCount] * Setup.GAME_CONFIG.board_size;
+                            sprEffect.x = this._Logic.ArrayWinX[animRunCount] * Config.GAME_CONFIG.board_size;
+                            sprEffect.y = this._Logic.ArrayWinY[animRunCount] * Config.GAME_CONFIG.board_size;
                             sprEffect.visible = true;
                         }
                         if (this._Logic.ArrayWinX[animRunCount] === -1) {
@@ -374,13 +374,13 @@ export default class Game {
                     clearInterval(animWin);
                 }
             }
-        }, Setup.GRAPHICS.frame_rate);
+        }, Config.GRAPHICS.frame_rate);
     }
 
     _feedbackGameOver() {
         let imgKeyMessage,
             imgKeyRocket,
-            texSizeRocket = Setup.GAME_CONFIG.board_size * 2,
+            texSizeRocket = Config.GAME_CONFIG.board_size * 2,
             rect = new PIXI.Rectangle(0, 0, texSizeRocket, texSizeRocket),
             texRocket,
             sprRocket,
@@ -395,16 +395,16 @@ export default class Game {
             animLoopCounter = 0;
         switch (this._Logic.PlayerTurn) {
             case 0:
-                imgKeyMessage = Setup.IMAGES.result_tie;
+                imgKeyMessage = Config.IMAGES.result_tie;
                 rockets = false;
                 break;
             case 1:
-                imgKeyMessage = Setup.IMAGES.result_blue;
-                imgKeyRocket = Setup.IMAGES.rocket_blue;
+                imgKeyMessage = Config.IMAGES.result_blue;
+                imgKeyRocket = Config.IMAGES.rocket_blue;
                 break;
             case 2:
-                imgKeyMessage = Setup.IMAGES.result_red;
-                imgKeyRocket = Setup.IMAGES.rocket_red;
+                imgKeyMessage = Config.IMAGES.result_red;
+                imgKeyRocket = Config.IMAGES.rocket_red;
                 break;
         }
         this.sprMessage.texture = this.resources[imgKeyMessage].texture;
@@ -415,12 +415,12 @@ export default class Game {
             texRocket = this.resources[imgKeyRocket].texture;
             sprRocket = new PIXI.Sprite(texRocket);
             sprRocket.texture.frame = rect;
-            sprRocket.y = Setup.GAME_CONFIG.board_height * Setup.GAME_CONFIG.board_size;
+            sprRocket.y = Config.GAME_CONFIG.board_height * Config.GAME_CONFIG.board_size;
             this._container.addChild(sprRocket);
         }
 
         animRocket = setInterval(() => {
-            if (animDelayCounter < Setup.GRAPHICS.result_delay) {
+            if (animDelayCounter < Config.GRAPHICS.result_delay) {
                 animDelayCounter += 1;
             } else {
                 if (firstLoop) {
@@ -430,13 +430,13 @@ export default class Game {
                 if (rockets) {
                     if (animLoopCounter % animFrameCount === 0) {
                         rect.x = 0;
-                        sprRocket.x = Math.floor(Math.random() * (Setup.GAME_CONFIG.board_width - 1)) * Setup.GAME_CONFIG.board_size;
-                        rocketDest = Math.floor(Math.random() * (Setup.GAME_CONFIG.board_height - 1)) + 2;
-                        sprRocket.y = Setup.GAME_CONFIG.board_height * Setup.GAME_CONFIG.board_size;
+                        sprRocket.x = Math.floor(Math.random() * (Config.GAME_CONFIG.board_width - 1)) * Config.GAME_CONFIG.board_size;
+                        rocketDest = Math.floor(Math.random() * (Config.GAME_CONFIG.board_height - 1)) + 2;
+                        sprRocket.y = Config.GAME_CONFIG.board_height * Config.GAME_CONFIG.board_size;
                     } else if (animLoopCounter % animFrameCount === 1) {
                         traveling = true;
                         rocketDest -= rocketSpeed;
-                        sprRocket.y -= rocketSpeed * Setup.GAME_CONFIG.board_size;
+                        sprRocket.y -= rocketSpeed * Config.GAME_CONFIG.board_size;
                         if (rect.y === 0) {
                             rect.y = texSizeRocket;
                         } else {
@@ -458,11 +458,11 @@ export default class Game {
                     clearInterval(animRocket);
                 }
             }
-        }, Setup.GRAPHICS.frame_rate);
+        }, Config.GRAPHICS.frame_rate);
     }
 
     _noBoardInteractivity() {
-        for (let i = 0; i < Setup.GAME_CONFIG.board_width; i += 1) {
+        for (let i = 0; i < Config.GAME_CONFIG.board_width; i += 1) {
             this._unInteractive(this.slotContainer.children[i]);
         }
     }
@@ -478,7 +478,7 @@ export default class Game {
 
     _nextTurn() {
         let nextPlayer = this._Logic.PlayerTurn + 1;
-        if (nextPlayer > Setup.GAME_CONFIG.num_players) {
+        if (nextPlayer > Config.GAME_CONFIG.num_players) {
             nextPlayer = 1;
         }
         this._Logic.PlayerTurn = nextPlayer;
@@ -496,23 +496,23 @@ export default class Game {
         switch (this._Logic.PlayerTurn) {
             case 1:
                 rectPosX = 0;
-                imgKey = Setup.IMAGES.chip_blue_shadow;
+                imgKey = Config.IMAGES.chip_blue_shadow;
                 break;
             case 2:
-                rectPosX = Setup.GAME_CONFIG.board_size;
-                imgKey = Setup.IMAGES.chip_red_shadow;
+                rectPosX = Config.GAME_CONFIG.board_size;
+                imgKey = Config.IMAGES.chip_red_shadow;
                 break;
         }
         this.rectArrow.x = rectPosX;
         if (this._Logic._isSlotOccupied(this._Controls._selectedSlot)) {
             this.rectArrow.y = 0;
         } else {
-            this.rectArrow.y = Setup.GAME_CONFIG.board_size;
+            this.rectArrow.y = Config.GAME_CONFIG.board_size;
         }
         this.sprArrow.texture.frame = this.rectArrow;
         this.sprShadow.texture = this.resources[imgKey].texture;
-        this.arrowContainer.x = this._Controls._selectedSlot * Setup.GAME_CONFIG.board_size;
-        this.sprShadow.y = (this._Logic.ArraySlotVacancy[this._Controls._selectedSlot] - 1) * Setup.GAME_CONFIG.board_size;
+        this.arrowContainer.x = this._Controls._selectedSlot * Config.GAME_CONFIG.board_size;
+        this.sprShadow.y = (this._Logic.ArraySlotVacancy[this._Controls._selectedSlot] - 1) * Config.GAME_CONFIG.board_size;
     }
 
     onClickReplay() {
@@ -522,13 +522,13 @@ export default class Game {
     _feedbackReplay() {
         let delayCounter = 0,
             replayDelay = setInterval(() => {
-                if (delayCounter === Setup.GRAPHICS.btn_delay) {
+                if (delayCounter === Config.GRAPHICS.btn_delay) {
                     this._scene();
                     clearInterval(replayDelay);
                 }
                 delayCounter += 1;
-            }, Setup.GRAPHICS.frame_rate);
-        this.rectBtnReplay.y = Setup.GRAPHICS.btn_height * 2;
+            }, Config.GRAPHICS.frame_rate);
+        this.rectBtnReplay.y = Config.GRAPHICS.btn_height * 2;
         this.sprBtnReplay.texture.frame = this.rectBtnReplay;
     }
 }

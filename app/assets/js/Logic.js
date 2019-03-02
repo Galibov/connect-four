@@ -1,11 +1,11 @@
-import Setup from './Setup'
+import Config from './Config'
 export default class Logic {
     constructor() {
         this.ArrayFieldValues = [];
         this.ArraySlotVacancy = [];
         this.ArrayWinX = [];
         this.ArrayWinY = [];
-        this.maxChipRow = (2 * Setup.GAME_CONFIG.win_condition) - 1;
+        this.maxChipRow = (2 * Config.GAME_CONFIG.win_condition) - 1;
         this.PlayerTurn;
         this.FieldsVacant;
     }
@@ -15,16 +15,16 @@ export default class Logic {
         this._fillArraySlotVacancy();
         this._fillArrayWin();
         this.PlayerTurn = 1;
-        this.FieldsVacant = Setup.GAME_CONFIG.board_height * Setup.GAME_CONFIG.board_height
+        this.FieldsVacant = Config.GAME_CONFIG.board_height * Config.GAME_CONFIG.board_height
         this.GameOver = false;
     }
 
     _fillArrayFieldValues() {
         let i,
             j;
-        for (i = 0; i < Setup.GAME_CONFIG.board_width; i += 1) {
+        for (i = 0; i < Config.GAME_CONFIG.board_width; i += 1) {
             this.ArrayFieldValues[i] = [];
-            for (j = 0; j < Setup.GAME_CONFIG.board_height; j += 1) {
+            for (j = 0; j < Config.GAME_CONFIG.board_height; j += 1) {
                 this.ArrayFieldValues[i][j] = 0;
             }
         }
@@ -32,8 +32,8 @@ export default class Logic {
 
     _fillArraySlotVacancy() {
         let i;
-        for (i = 0; i < Setup.GAME_CONFIG.board_width; i += 1) {
-            this.ArraySlotVacancy[i] = Setup.GAME_CONFIG.board_height;
+        for (i = 0; i < Config.GAME_CONFIG.board_width; i += 1) {
+            this.ArraySlotVacancy[i] = Config.GAME_CONFIG.board_height;
         }
     }
 
@@ -60,7 +60,7 @@ export default class Logic {
 
     _checkWin(vx, vy) {
         let winCondFulfilled = false,
-            maxLength = Setup.GAME_CONFIG.win_condition,
+            maxLength = Config.GAME_CONFIG.win_condition,
             direction,
             dx,
             dy,
@@ -74,7 +74,7 @@ export default class Logic {
         this.ArrayWinX[arrayStart] = vx;
         this.ArrayWinY[arrayStart] = vy;
 
-        for (direction = 0; direction < Setup.GAME_CONFIG.win_condition; direction += 1) {
+        for (direction = 0; direction < Config.GAME_CONFIG.win_condition; direction += 1) {
             counter = 1;
             positiveCount = true;
             negativeCount = true;
@@ -140,10 +140,10 @@ export default class Logic {
             isValid;
         switch (Axis) {
             case 'x':
-                comp = Setup.GAME_CONFIG.board_width;
+                comp = Config.GAME_CONFIG.board_width;
                 break;
             case 'y':
-                comp = Setup.GAME_CONFIG.board_height;
+                comp = Config.GAME_CONFIG.board_height;
                 break;
         }
         isValid = (Index > -1 && Index < comp) ? true : false;
