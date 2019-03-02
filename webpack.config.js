@@ -18,6 +18,10 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /pixi.js\/dist\/pixi.min.js/,
+                loader: "script-loader"
+            },
+            {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: {
