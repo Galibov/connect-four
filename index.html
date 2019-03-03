@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="http://c.filler00.com/resources/fonts/wendy/1.0/wendy.css">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <title>Connect 4</title>
+    <style>
+        body {
+            background-color: rgb(19, 11, 27);
+            height: 90vh;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        canvas {
+            margin: 20px auto 10px;
+            border: 8px solid #DEEED6;
+            image-rendering: pixelated;
+
+        }
+
+        h1 {
+            font-size: 6rem;
+            font-family: Wendy;
+            margin-bottom: 0;
+            justify-content: center;
+        }
+
+        .red {
+            color: #d04648
+        }
+
+        .blue {
+            color: #597dce;
+        }
+
+        .score-block {
+            font-size: 3rem;
+            font-family: Wendy;
+        }
+
+        .score-block span {
+            margin: 10px 15px 10px 15px
+        }
+    </style>
+</head>
+
+<body>
+    <h1><span class="red">CONNECT</span> <span class="blue">FOUR</span></h1>
+    <div id="game-block"></div>
+    <div class="score-block">
+        <span class="blue">PLAYER BLUE
+            <span id="blue-score">0</span>
+        </span>
+        <span class="red">PLAYER RED <span id="red-score">0</span></span>
+    </div>
+    <script src="bundle.js"></script>
+</body>
+
+</html>
