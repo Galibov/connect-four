@@ -4,10 +4,11 @@
   "description": "Connect 4 game for 2 players powered by PixiJS",
   "main": "index.js",
   "config": {
-    "buildDir": "./dist"
+    "buildDir": "./build"
   },
   "scripts": {
     "start": "npm run build && webpack-dev-server --content-base ./dist/ --hot --inline",
+    "deploy": "gh-pages -d build",
     "build": "webpack --mode production"
   },
   "repository": {
@@ -35,6 +36,7 @@
     "babel-loader": "^8.0.5",
     "copy-webpack-plugin": "^5.0.0",
     "file-loader": "^3.0.1",
+    "gh-pages": "^2.0.1",
     "html-loader": "^0.5.5",
     "script-loader": "^0.7.2",
     "webpack": "^4.29.5",

@@ -3,11 +3,12 @@
 ![](demo.gif)
 
 ## Play Here
-
+[PRESS ON ME!](https://galibov.github.io/connect-four/)
 ## Project Setup
 ```
 npm install
 ```
+
 ```
 npm start
 ```

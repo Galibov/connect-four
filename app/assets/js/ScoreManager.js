@@ -16,7 +16,10 @@ export default class ScoreManager {
                 'blue_score': 0,
                 'red_score': 0
             }
+            console.log('initScores', initScores)
             this._setScores(initScores)
+            this.saved_scores = JSON.parse(localStorage.getItem('scores'))
+
         }
     }
 
