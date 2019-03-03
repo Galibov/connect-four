@@ -21,9 +21,6 @@ import try_again_blue from '../img/try_again_blue.png'
 import rocket_red from '../img/rocket_red.png'
 import rocket_blue from '../img/rocket_blue.png'
 import btn_replay from '../img/btn_replay.png'
-// sounds
-import victory from '../sounds/victory.mp3'
-
 
 export default {
     CONTAINER: '#game-block',
@@ -48,9 +45,6 @@ export default {
         rocket_red,
         rocket_blue,
         btn_replay
-    },
-    SOUNDS: {
-        victory
     },
     GAME_CONFIG: {
         num_players: 2,

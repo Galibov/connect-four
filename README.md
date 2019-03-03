@@ -1,6 +1,10 @@
-# connect-four
+# Connect 4
 
-## Project setup
+![](demo.gif)
+
+## Play Here
+
+## Project Setup
 ```
 npm install
 ```
@@ -8,8 +12,10 @@ npm install
 npm start
 ```
 
-## Project build
+## Project Build
 ```
 npm run-script build
 ```
+
+
 

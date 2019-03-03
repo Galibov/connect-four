@@ -1,9 +1,11 @@
 import Config from './Config'
 import Controls from './Controls'
+import ScoreManager from './ScoreManager'
 import Logic from './Logic'
 export default class Game {
     constructor() {
         this._domContainer = document.getElementById('game-block');
+        this._ScoreManager = new ScoreManager()
         PIXI.loader
             .add([Object.values(Config.IMAGES)])
             .load(() => this._start());
@@ -401,10 +403,12 @@ export default class Game {
             case 1:
                 imgKeyMessage = Config.IMAGES.result_blue;
                 imgKeyRocket = Config.IMAGES.rocket_blue;
+                this._ScoreManager._updateScoreBlue()
                 break;
             case 2:
                 imgKeyMessage = Config.IMAGES.result_red;
                 imgKeyRocket = Config.IMAGES.rocket_red;
+                this._ScoreManager._updateScoreRed()
                 break;
         }
         this.sprMessage.texture = this.resources[imgKeyMessage].texture;
